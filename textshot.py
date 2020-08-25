@@ -3,6 +3,8 @@
 import io
 import os
 import sys
+import csv
+import re
 
 import pyperclip
 import pytesseract
@@ -16,6 +18,16 @@ except ImportError:
     pass
 
 
+dict={}
+    
+with open("dict.csv",'r',encoding="utf-8") as f:
+    next(f) # skip 1st row
+    reader = csv.reader(f, delimiter=',')
+    for k, v in reader:
+        # print(k, v)
+        dict[k] = v
+    # print(dict)
+  
 class Snipper(QtWidgets.QWidget):
     def __init__(self, parent=None, flags=Qt.WindowFlags()):
         super().__init__(parent=parent, flags=flags)
@@ -93,17 +105,32 @@ def processImage(img):
         return
 
     if result:
+        matched = False
+        
+        for key in dict.keys():
+            # print(key, ':', dict[key])
+            m = re.search(str(key), result, re.IGNORECASE)
+            if m:
+                result = key+'=>'+str(dict[key])
+                matched = True
+        
         pyperclip.copy(result)
-        print(f'INFO: Copied "{result}" to the clipboard')
-        notify(f'Copied "{result}" to the clipboard')
+       
+        if matched:
+            print(f'INFO: Copied "{result}" to the clipboard')
+            notify('Text Matched', f'Copied "{result}" to the clipboard')
+        else:
+            print(f'INFO: Copied "{result}" to the clipboard')
+            notify('Text didn\'t Matched', f'Copied "{result}" to the clipboard')
     else:
         print(f"INFO: Unable to read text from image, did not copy")
-        notify(f"Unable to read text from image, did not copy")
+        notify('Text didn\'t Matched', f"Unable to read text from image, did not copy")
 
 
-def notify(msg):
+def notify(title, msg):
     try:
-        Notification(title="TextShot", description=msg).send()
+        Notification(title=title, description=msg).send()
+        
     except (SystemError, NameError):
         trayicon = QtWidgets.QSystemTrayIcon(
             QtGui.QIcon(
