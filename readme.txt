@@ -5,7 +5,12 @@ vs2015: http://download.microsoft.com/download/B/4/8/B4870509-05CB-447C-878F-2F8
 tesseract-ocr-w64-setup-v5.0.0-alpha.20200328.exe: https://digi.bib.uni-mannheim.de/tesseract/tesseract-ocr-w64-setup-v5.0.0-alpha.20200328.exe
 
 
-2. 设置pip国内豆瓣源(在%HOMEDRIVE%\%HOMEPATH%新建pip\pip.ini文件)
+2. 设置pip国内豆瓣源
+# OS windows
+# 在%HOMEDRIVE%\%HOMEPATH%新建pip\pip.ini文件
+# OS linux
+# $home/.pip/pip.conf
+
 > python
 >>> import os ; ini = "[global]\nindex-url = https://pypi.doubanio.com/simple/\n" ; pippath=os.environ["USERPROFILE"]+"\\pip\\" ; exec("if not os.path.exists(pippath):\n\tos.mkdir(pippath)"); open(pippath+"/pip.ini","w+").write(ini)
 
@@ -15,8 +20,12 @@ cd textshot
 
 4. (Optional) python virtual environment
 # python -m venv .venv
+# OS windows
 # .venv\Scripts\activate.bat
 # .venv\Scripts\deactivate.bat
+# OS linux
+# source .venv/bin/activate
+# source .venv/bin/deactivate
 
 5. 安装依赖lib
 pip install -r requirements.txt
