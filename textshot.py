@@ -101,7 +101,7 @@ def processImage(img):
         )
     except RuntimeError as error:
         print(f"ERROR: An error occurred when trying to process the image: {error}")
-        notify(f"An error occurred when trying to process the image: {error}")
+        notify('Error', f"An error occurred when trying to process the image: {error}")
         return
 
     if result:
@@ -121,10 +121,10 @@ def processImage(img):
             notify('Text Matched', f'Copied "{result}" to the clipboard')
         else:
             print(f'INFO: Copied "{result}" to the clipboard')
-            notify('Text didn\'t Matched', f'Copied "{result}" to the clipboard')
+            notify('Text aren\'t Matched', f'Copied "{result}" to the clipboard')
     else:
         print(f"INFO: Unable to read text from image, did not copy")
-        notify('Text didn\'t Matched', f"Unable to read text from image, did not copy")
+        notify('Text aren\'t Matched', f"Unable to read text from image, did not copy")
 
 
 def notify(title, msg):
