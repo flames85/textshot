@@ -8,11 +8,15 @@ tesseract-ocr-w64-setup-v5.0.0-alpha.20200328.exe: https://digi.bib.uni-mannheim
 2. 设置pip国内豆瓣源
 # OS windows
 # 在%HOMEDRIVE%\%HOMEPATH%新建pip\pip.ini文件
-# OS linux
-# $home/.pip/pip.conf
-
 > python
 >>> import os ; ini = "[global]\nindex-url = https://pypi.doubanio.com/simple/\n" ; pippath=os.environ["USERPROFILE"]+"\\pip\\" ; exec("if not os.path.exists(pippath):\n\tos.mkdir(pippath)"); open(pippath+"/pip.ini","w+").write(ini)
+
+# OS linux
+# $home/.pip/pip.conf
+pip3 install -i https://pypi.doubanio.com/simple/ selenium
+easy_install -i https://pypi.doubanio.com/simple/ selenium
+pip install -U selenium -i "https://pypi.doubanio.com/simple/"
+pip install selenium -i http://mirrors.aliyun.com/pypi/simple/
 
 3. clone工程
 git clone https://github.com/ianzhao05/textshot
